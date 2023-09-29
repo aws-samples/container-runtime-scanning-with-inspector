@@ -27,7 +27,7 @@
     "@aws-sdk/client-eventbridge": "^3.278.0",
     "@aws-sdk/client-lambda": "^3.279.0",
     "@aws-solutions-constructs/aws-eventbridge-lambda": "^2.32.0",
-    "aws-cdk-lib": "^2.63.0",
+    "aws-cdk-lib": "^2.80.0",
     "aws-sdk": "^2.1317.0",
     "cdk-nag": "^2.22.7",
     "constructs": "^10.0.0",
