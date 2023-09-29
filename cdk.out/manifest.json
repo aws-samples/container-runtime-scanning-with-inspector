@@ -1,0 +1,160 @@
+{
+  "version": "31.0.0",
+  "artifacts": {
+    "ContainerRuntimeScanning.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ContainerRuntimeScanning.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ContainerRuntimeScanning": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ContainerRuntimeScanning.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/19e88628340de0ae7e34890859d7ca2392baf37f4049a1a4cb8e07fbf39644ab.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ContainerRuntimeScanning.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ContainerRuntimeScanning.assets"
+      ],
+      "metadata": {
+        "/ContainerRuntimeScanning/ecrEnhancedScanning/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ecrEnhancedScanning89748792"
+          }
+        ],
+        "/ContainerRuntimeScanning/ecrEnhancedScanning/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ecrEnhancedScanningCustomResourcePolicy07D1DBDD"
+          }
+        ],
+        "/ContainerRuntimeScanning/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+          }
+        ],
+        "/ContainerRuntimeScanning/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+          }
+        ],
+        "/ContainerRuntimeScanning/inspectorEcrConfiguration/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "inspectorEcrConfiguration727722F8"
+          }
+        ],
+        "/ContainerRuntimeScanning/inspectorEcrConfiguration/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "inspectorEcrConfigurationCustomResourcePolicy044539D6"
+          }
+        ],
+        "/ContainerRuntimeScanning/vulnerable-ecr-image-found-lambda/CheckECS-LambdaServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "vulnerableecrimagefoundlambdaCheckECSLambdaServiceRole9CDB42FB"
+          }
+        ],
+        "/ContainerRuntimeScanning/vulnerable-ecr-image-found-lambda/CheckECS-LambdaServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "vulnerableecrimagefoundlambdaCheckECSLambdaServiceRoleDefaultPolicyA14D6FC1"
+          }
+        ],
+        "/ContainerRuntimeScanning/vulnerable-ecr-image-found-lambda/CheckECS-Lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "vulnerableecrimagefoundlambdaCheckECSLambda2541FF57"
+          }
+        ],
+        "/ContainerRuntimeScanning/vulnerable-ecr-image-found-lambda/CheckECS-Lambda/LogRetention/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "vulnerableecrimagefoundlambdaCheckECSLambdaLogRetention19C7B884"
+          }
+        ],
+        "/ContainerRuntimeScanning/vulnerable-ecr-image-found-lambda/CheckECS-Lambda/AwsEventsLambdaInvokePermission-1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "vulnerableecrimagefoundlambdaCheckECSLambdaAwsEventsLambdaInvokePermission1A37CAB68"
+          }
+        ],
+        "/ContainerRuntimeScanning/vulnerable-ecr-image-found-lambda/EventsRule/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "vulnerableecrimagefoundlambdaEventsRule6A282CF4"
+          }
+        ],
+        "/ContainerRuntimeScanning/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+          }
+        ],
+        "/ContainerRuntimeScanning/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB"
+          }
+        ],
+        "/ContainerRuntimeScanning/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A"
+          }
+        ],
+        "/ContainerRuntimeScanning/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ContainerRuntimeScanning/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ContainerRuntimeScanning/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ContainerRuntimeScanning/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ContainerRuntimeScanning"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

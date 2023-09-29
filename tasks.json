@@ -1,0 +1,184 @@
+{
+  "tasks": [
+    {
+      "attachments": [
+        {
+          "details": [
+            {
+              "name": "subnetId",
+              "value": "subnet-084c01f76b3f7a051"
+            },
+            {
+              "name": "networkInterfaceId",
+              "value": "eni-0e32f70d79925f33c"
+            },
+            {
+              "name": "macAddress",
+              "value": "02:a3:69:11:31:91"
+            },
+            {
+              "name": "privateDnsName",
+              "value": "ip-172-31-2-253.ec2.internal"
+            },
+            {
+              "name": "privateIPv4Address",
+              "value": "172.31.2.253"
+            }
+          ],
+          "id": "892e8c91-1516-4be8-a134-4d6a52be4ad7",
+          "status": "ATTACHED",
+          "type": "ElasticNetworkInterface"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "ecs.cpu-architecture",
+          "value": "x86_64"
+        }
+      ],
+      "availabilityZone": "us-east-1c",
+      "clusterArn": "arn:aws:ecs:us-east-1:177422307886:cluster/VulnCluster1",
+      "connectivity": "CONNECTED",
+      "connectivityAt": "2023-04-07T18:28:26.975Z",
+      "containers": [
+        {
+          "containerArn": "arn:aws:ecs:us-east-1:177422307886:container/VulnCluster1/b82dbd9e26954eb7b90b77824acfaf9e/446bf2f8-865f-4f0b-8872-e310eecd15c5",
+          "cpu": "0",
+          "healthStatus": "UNKNOWN",
+          "image": "177422307886.dkr.ecr.us-east-1.amazonaws.com/containerruntimesecurity_ecr:nginx",
+          "imageDigest": "sha256:b88683066dc26c2244563420bc271b9ea6f871ee3b9ee0e69eee36cf039c19b6",
+          "lastStatus": "RUNNING",
+          "name": "vulNginx",
+          "networkBindings": [],
+          "networkInterfaces": [
+            {
+              "attachmentId": "892e8c91-1516-4be8-a134-4d6a52be4ad7",
+              "privateIpv4Address": "172.31.2.253"
+            }
+          ],
+          "runtimeId": "b82dbd9e26954eb7b90b77824acfaf9e-2450015524",
+          "taskArn": "arn:aws:ecs:us-east-1:177422307886:task/VulnCluster1/b82dbd9e26954eb7b90b77824acfaf9e"
+        }
+      ],
+      "cpu": "1024",
+      "createdAt": "2023-04-07T18:28:22.059Z",
+      "desiredStatus": "RUNNING",
+      "enableExecuteCommand": false,
+      "ephemeralStorage": {
+        "sizeInGiB": 20
+      },
+      "group": "VulNginx",
+      "healthStatus": "UNKNOWN",
+      "lastStatus": "RUNNING",
+      "launchType": "FARGATE",
+      "memory": "3072",
+      "overrides": {
+        "containerOverrides": [
+          {
+            "name": "vulNginx"
+          }
+        ],
+        "inferenceAcceleratorOverrides": []
+      },
+      "platformFamily": "Linux",
+      "platformVersion": "1.4.0",
+      "pullStartedAt": "2023-04-07T18:28:34.561Z",
+      "pullStoppedAt": "2023-04-07T18:28:40.316Z",
+      "startedAt": "2023-04-07T18:28:41.610Z",
+      "tags": [],
+      "taskArn": "arn:aws:ecs:us-east-1:177422307886:task/VulnCluster1/b82dbd9e26954eb7b90b77824acfaf9e",
+      "taskDefinitionArn": "arn:aws:ecs:us-east-1:177422307886:task-definition/VulnNginx:1",
+      "version": 3
+    },
+    {
+      "attachments": [
+        {
+          "details": [
+            {
+              "name": "subnetId",
+              "value": "subnet-06aedd0059bc35f81"
+            },
+            {
+              "name": "networkInterfaceId",
+              "value": "eni-0d5f0a767a3b25bb1"
+            },
+            {
+              "name": "macAddress",
+              "value": "12:7f:c4:c4:c8:03"
+            },
+            {
+              "name": "privateDnsName",
+              "value": "ip-172-31-83-250.ec2.internal"
+            },
+            {
+              "name": "privateIPv4Address",
+              "value": "172.31.83.250"
+            }
+          ],
+          "id": "78791508-acdd-4673-983b-5aa8d83fe49a",
+          "status": "ATTACHED",
+          "type": "ElasticNetworkInterface"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "ecs.cpu-architecture",
+          "value": "x86_64"
+        }
+      ],
+      "availabilityZone": "us-east-1d",
+      "clusterArn": "arn:aws:ecs:us-east-1:177422307886:cluster/VulnCluster1",
+      "connectivity": "CONNECTED",
+      "connectivityAt": "2023-04-14T15:28:34.572Z",
+      "containers": [
+        {
+          "containerArn": "arn:aws:ecs:us-east-1:177422307886:container/VulnCluster1/c9df70fd88ea4eb8adbff69be1e6ccde/d6fe091c-b3f1-4147-93ad-911ba6bb4c43",
+          "cpu": "0",
+          "healthStatus": "UNKNOWN",
+          "image": "177422307886.dkr.ecr.us-east-1.amazonaws.com/containerruntimesecurity_ecr:nginx",
+          "imageDigest": "sha256:b88683066dc26c2244563420bc271b9ea6f871ee3b9ee0e69eee36cf039c19b6",
+          "lastStatus": "RUNNING",
+          "name": "vulNginx",
+          "networkBindings": [],
+          "networkInterfaces": [
+            {
+              "attachmentId": "78791508-acdd-4673-983b-5aa8d83fe49a",
+              "privateIpv4Address": "172.31.83.250"
+            }
+          ],
+          "runtimeId": "c9df70fd88ea4eb8adbff69be1e6ccde-2450015524",
+          "taskArn": "arn:aws:ecs:us-east-1:177422307886:task/VulnCluster1/c9df70fd88ea4eb8adbff69be1e6ccde"
+        }
+      ],
+      "cpu": "1024",
+      "createdAt": "2023-04-14T15:28:31.401Z",
+      "desiredStatus": "RUNNING",
+      "enableExecuteCommand": false,
+      "ephemeralStorage": {
+        "sizeInGiB": 20
+      },
+      "group": "family:VulnNginx",
+      "healthStatus": "UNKNOWN",
+      "lastStatus": "RUNNING",
+      "launchType": "FARGATE",
+      "memory": "3072",
+      "overrides": {
+        "containerOverrides": [
+          {
+            "name": "vulNginx"
+          }
+        ],
+        "inferenceAcceleratorOverrides": []
+      },
+      "platformFamily": "Linux",
+      "platformVersion": "1.4.0",
+      "pullStartedAt": "2023-04-14T15:28:41.020Z",
+      "pullStoppedAt": "2023-04-14T15:28:46.232Z",
+      "startedAt": "2023-04-14T15:28:47.107Z",
+      "tags": [],
+      "taskArn": "arn:aws:ecs:us-east-1:177422307886:task/VulnCluster1/c9df70fd88ea4eb8adbff69be1e6ccde",
+      "taskDefinitionArn": "arn:aws:ecs:us-east-1:177422307886:task-definition/VulnNginx:1",
+      "version": 3
+    }
+  ]
+}
