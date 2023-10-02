@@ -17,9 +17,9 @@ Please follow the following deployment steps:
 6. Deploy into account - `cdk deploy`.
 
 ### Verify Functionality:
-Amazon ECR Enhanced Scanning integrates Amazon Inspector to provide container image vulnerability scanning. When a _new_ vulnerability is found in a running image, an event is created which is used to create a CloudWatch Log from the Lambda function, `vulnerable-ecr-image-found-lambda`. The log group of `vulnerable-ecr-image-found-lambda`  it the current home for these logs. The function will print and identify if the vulnerability is present in an existing running container. One could simply wait until a vulnerability is found and trace it back, or, they can trigger the functionality themselves.
+Amazon ECR Enhanced Scanning integrates Amazon Inspector to provide container image vulnerability scanning. When a _new_ vulnerability is found in a running image, an event is created which is used to create a CloudWatch Log from the Lambda function, `CheckECS-Lambda`. Follow the log group found on the console for the lambda function to in the console for these logs. The function will print and identify if the vulnerability is present in an existing running container. One could simply wait until a vulnerability is found and trace it back, or, they can trigger the functionality themselves.
 
-This solution is configured to scan existing container images as well as new images as they are pushed into Amazon ECR. One can simply push a container image with a known vulnerability, such as one with an outdated programming language, to trigger the scanning. The solution will identify the vulnerability and generate a log to the log group of the Lambda function.
+This solution is configured to scan existing container images as well as new images as they are pushed into Amazon ECR. Pushing a container image with a known vulnerability, such as one with an outdated programming language, will trigger the scanning. The solution will identify the vulnerability and generate a log.
 
 ## Clean Up:
 This sample code is deployed using a CloudFormation template, meaning that the clean up is pretty straight forward. From the root folder of the CDK project, once can execute `cdk destroy` to delete the CloudFormation stack. This will remove all assets created when deployed into the account.
