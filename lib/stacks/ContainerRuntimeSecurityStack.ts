@@ -34,7 +34,12 @@ export class ContainerRuntimeSecurityStack extends Stack {
           parameters: {
             rules: [
               {
-                repositoryFilters: ["*"],
+                repositoryFilters: [
+                  {
+                    filter: "*",
+                    filterType: "WILDCARD"
+                  }
+                ],
                 scanFrequency: "SCAN_ON_PUSH",
               },
             ],
