@@ -1,4 +1,4 @@
-import { Duration, Stack, StackProps, RemovalPolicy } from "aws-cdk-lib";
+import { Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import {
   AwsCustomResource,
@@ -13,7 +13,6 @@ import path = require("path");
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as events from "aws-cdk-lib/aws-events";
-import { LambdaFunctionProps } from "aws-cdk-lib/aws-events-targets";
 import * as logs from "aws-cdk-lib/aws-logs";
 
 export class ContainerRuntimeSecurityStack extends Stack {
@@ -103,7 +102,7 @@ export class ContainerRuntimeSecurityStack extends Stack {
           path.join(__dirname, "../", "lambdas", "CheckEcs"),
           { exclude: ["*.ts", "*.d.ts"] }
         ),
-        description: "Check ECS for found vulnerabilty in running images",
+        description: "Check ECS for found vulnerability in running images",
         functionName: "CheckECS-Lambda",
         runtime: lambda.Runtime.NODEJS_18_X,
         handler: "index.handler",
