@@ -1,5 +1,5 @@
 # Container Runtime Security - Sample Code
-> This sample solution illustrates how to configure continuous scanning of container images in AWS, leveraging AWS native resources. Continuous scanning will enable a company to actively keep track of container images used in their environment and identify if and when an image has a common vulnerability. This solution can then be expanded by a company for rapid correction. 
+> This sample solution illustrates how to configure continuous scanning of container images in AWS, leveraging AWS native resources. Continuous scanning will enable a company to actively keep track of container images used in their environment and identify if and when an image has a common vulnerability. This solution can then be expanded by a company for rapid correction. Please reference this published [solutions guidance](https://aws.amazon.com/solutions/guidance/container-runtime-security-with-amazon-inspector/) for reference.
 
 ## Reference Architecture
 ![title](public/container-runtime-security.jpg)
