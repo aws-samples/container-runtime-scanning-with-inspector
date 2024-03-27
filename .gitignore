@@ -4,3 +4,4 @@ node_modules/
 tasks.json
 .vscode/
 *.log
+cdk.out/
