@@ -4,134 +4,120 @@ import {
   AwsCustomResource,
   AwsCustomResourcePolicy,
 } from "aws-cdk-lib/custom-resources";
-import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 import {
   EventbridgeToLambda,
-  EventbridgeToLambdaProps,
 } from "@aws-solutions-constructs/aws-eventbridge-lambda";
-import path = require("path");
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as iam from "aws-cdk-lib/aws-iam";
-import * as events from "aws-cdk-lib/aws-events";
-import * as logs from "aws-cdk-lib/aws-logs";
+import { join } from "path";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { Match } from "aws-cdk-lib/aws-events";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
+import { RetentionDays } from "aws-cdk-lib/aws-logs";
 
 export class ContainerRuntimeSecurityStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-
     this.configureEnhancedScanning();
     this.createEventBridgeToLambda();
   }
 
   configureEnhancedScanning() {
-    
-      new AwsCustomResource(this, "ecrEnhancedScanning", {
-        onCreate: {
-          service: "ECR",
-          action: "putRegistryScanningConfiguration",
-          physicalResourceId: { id: "putRegistryScanningConfiguration" },
-          parameters: {
-            rules: [
-              {
-                repositoryFilters: [
-                  {
-                    filter: "*",
-                    filterType: "WILDCARD"
-                  }
-                ],
-                scanFrequency: "SCAN_ON_PUSH",
-              },
-            ],
-            scanType: "ENHANCED",
+
+    const enableInspector = new AwsCustomResource(this, "enableInspector", {
+      installLatestAwsSdk: true,
+      onUpdate: {
+        service: "Inspector2",
+        action: "enable",
+        physicalResourceId: { id: "enableInspector" },
+        parameters: {
+          resourceTypes: ["ECR"],
+        },
+      },
+      onDelete: {
+        service: "Inspector2",
+        action: "disable",
+        physicalResourceId: { id: "disableInspector" },
+        parameters: {
+          resourceTypes: ["ECR"],
+        },
+      },
+      policy: AwsCustomResourcePolicy.fromStatements([
+        new PolicyStatement({
+          actions: [
+            "iam:CreateServiceLinkedRole",
+            "inspector2:Enable",
+            "inspector2:Disable",
+          ],
+          resources: AwsCustomResourcePolicy.ANY_RESOURCE,
+        })
+      ])
+    })
+
+    new AwsCustomResource(this, "inspectorEcrConfiguration", {
+      installLatestAwsSdk: true,
+      onUpdate: {
+        service: "Inspector2",
+        action: "updateConfiguration",
+        physicalResourceId: { id: "updateConfiguration" },
+        parameters: {
+          ecrConfiguration: {
+            rescanDuration: "DAYS_30",
           },
         },
-        onUpdate: {
-          service: "ECR",
-          action: "putRegistryScanningConfiguration",
-          physicalResourceId: { id: "putRegistryScanningConfiguration" },
-          parameters: {
-            scanType: "ENHANCED",
-          },
-        },
-        
-        policy: AwsCustomResourcePolicy.fromStatements([
-          new PolicyStatement({
-            actions: [
-              "iam:CreateServiceLinkedRole",
-              "inspector2:Enable",
-              "ecr:PutRegistryScanningConfiguration",
-            ],
-            resources: AwsCustomResourcePolicy.ANY_RESOURCE,
-          }),
-        ]),
+      },
+      policy: AwsCustomResourcePolicy.fromSdkCalls({
+        resources: AwsCustomResourcePolicy.ANY_RESOURCE,
       }),
+    }).node.addDependency(enableInspector)
 
-
-
-      new AwsCustomResource(this, "inspectorEcrConfiguration", {
-        // installLatestAwsSdk: true, //<- must be turned on for first deployment, after that can be commented out
-        onUpdate: {
-          service: "Inspector2",
-          action: "updateConfiguration",
-          physicalResourceId: { id: "updateConfiguration" },
-          parameters: {
-            ecrConfiguration: {
-              rescanDuration: "DAYS_30", 
-            },
-          },
+    new AwsCustomResource(this, "ecrEnhancedScanning", {
+      onUpdate: {
+        service: "ECR",
+        action: "putRegistryScanningConfiguration",
+        physicalResourceId: { id: "putRegistryScanningConfiguration" },
+        parameters: {
+          scanType: "ENHANCED",
         },
-        
-        policy: AwsCustomResourcePolicy.fromStatements([
-          new PolicyStatement({
-            actions: [
-              "iam:CreateServiceLinkedRole",
-              // "inspector2:listMembers",
-              "inspector2:UpdateConfiguration",
-            ],
-            resources: AwsCustomResourcePolicy.ANY_RESOURCE,
-          }),
-        ]),
-      })
+      },
+      policy: AwsCustomResourcePolicy.fromSdkCalls({
+        resources: AwsCustomResourcePolicy.ANY_RESOURCE,
+      }),
+    }).node.addDependency(enableInspector)
+
   }
 
   createEventBridgeToLambda() {
 
-    const constructProps: EventbridgeToLambdaProps = {
-      lambdaFunctionProps: {
-        code: lambda.Code.fromAsset(
-          path.join(__dirname, "../", "lambdas", "CheckEcs"),
-          { exclude: ["*.ts", "*.d.ts"] }
-        ),
-        description: "Check ECS for found vulnerability in running images",
-        functionName: "CheckECS-Lambda",
-        runtime: lambda.Runtime.NODEJS_18_X,
-        handler: "index.handler",
-        // role: lambdaRole,
-        reservedConcurrentExecutions: 1,
-        initialPolicy: [
-          new iam.PolicyStatement({
-            resources: ["*"],
-            actions: ["ecs:ListClusters", "ecs:ListTasks", "ecs:DescribeTasks", "ecs:DescribeClusters"],
-          }),
-        ],
-        logRetention: logs.RetentionDays.ONE_MONTH,
-      },
-
-      eventRuleProps: {
-        ruleName: "ecr-enhanced-scanning-vulnerability-found",
-        eventPattern: {
-          source: ["aws.inspector2"],
-          detailType: ["Inspector2 Finding"],
-          resources:  events.Match.prefix("arn:aws:ecr") 
-        },
-        enabled: true,
-      },
-    };
-
-    const ebl = new EventbridgeToLambda(
+    new EventbridgeToLambda(
       this,
       "vulnerable-ecr-image-found-lambda",
-      constructProps
-    );
+      {
+        existingLambdaObj: new NodejsFunction(this, "CheckEcs", {
+          entry: join(__dirname, "..", "lambdas", "CheckEcs", "index.ts"),
+          handler: "index.handler",
+          description: "Check ECS for found vulnerability in running images",
+          functionName: "CheckECS-Lambda",
+          reservedConcurrentExecutions: 1,
+          initialPolicy: [
+            new PolicyStatement({
+              resources: ["*"],
+              actions: ["ecs:ListClusters", "ecs:ListTasks", "ecs:DescribeTasks", "ecs:DescribeClusters"],
+            }),
+          ],
+          logRetention: RetentionDays.ONE_MONTH,
+          runtime: Runtime.NODEJS_LATEST,
+        }),
+
+        eventRuleProps: {
+          ruleName: "ecr-enhanced-scanning-vulnerability-found",
+          eventPattern: {
+            source: ["aws.inspector2"],
+            detailType: ["Inspector2 Finding"],
+            resources: Match.prefix("arn:aws:ecr")
+          },
+          enabled: true,
+        },
+      }
+    )
   }
 }
