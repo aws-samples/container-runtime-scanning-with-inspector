@@ -4,7 +4,6 @@ import {
   ListClustersCommand,
   ListTasksCommand,
   DescribeTasksCommand,
-  DescribeClustersCommand,
   Task,
 } from "@aws-sdk/client-ecs";
 
